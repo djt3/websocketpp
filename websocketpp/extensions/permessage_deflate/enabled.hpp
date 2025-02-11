@@ -569,6 +569,7 @@ public:
             out.append((char *)(m_compress_buffer.get()), m_dstate.total_out);
         } while (m_dstate.avail_out == 0);
 
+        deflateReset(&m_dstate);
         return lib::error_code();
     }
 
