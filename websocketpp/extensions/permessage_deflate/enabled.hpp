@@ -550,8 +550,6 @@ public:
             return make_error_code(error::uninitialized);
         }
 
-        size_t output;
-
         if (in.empty()) {
             uint8_t buf[6] = {0x02, 0x00, 0x00, 0x00, 0xff, 0xff};
             out.append((char *)(buf),6);
@@ -568,9 +566,7 @@ public:
 
             deflate(&m_dstate, m_flush);
 
-            output = m_compress_buffer_size - m_dstate.avail_out;
-
-            out.append((char *)(m_compress_buffer.get()),output);
+            out.append((char *)(m_compress_buffer.get()), m_dstate.total_out);
         } while (m_dstate.avail_out == 0);
 
         return lib::error_code();
