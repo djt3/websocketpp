@@ -608,6 +608,8 @@ public:
             );
         } while (m_istate.avail_out == 0);
 
+        inflateReset(&m_istate);
+
         return lib::error_code();
     }
 private:
